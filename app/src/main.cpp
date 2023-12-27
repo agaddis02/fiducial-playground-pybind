@@ -63,6 +63,7 @@ static auto aruco_v5_detectFunc = [](const cv::Mat &input) {
 
 static const cv::Ptr<cv::aruco::Dictionary> dict =
 		cv::aruco::getPredefinedDictionary(cv::aruco::DICT_APRILTAG_36h11);
+static const auto ocvDetectorParams = cv::aruco::DetectorParameters::create();
 
 static auto opencv_aruco_detectFunc = [](const cv::Mat &input) {
 	std::vector<std::vector<cv::Point2f>> markers;
@@ -73,7 +74,7 @@ static auto opencv_aruco_detectFunc = [](const cv::Mat &input) {
 	if (input.channels() == 3) { cv::cvtColor(tmp, tmp, cv::COLOR_BGR2GRAY); }
 
 	steady_clock::time_point begin = steady_clock::now();
-	cv::aruco::detectMarkers(tmp, dict, markers, ids);
+	cv::aruco::detectMarkers(tmp, dict, markers, ids, ocvDetectorParams);
 	double_ms_dur detectElapsed = steady_clock::now() - begin;
 
 	return detectElapsed.count();
@@ -97,7 +98,12 @@ int main() {
 	cv::cvtColor(image_3658px, image_3658px_gray, cv::COLOR_BGR2GRAY);
 	cv::Size image_1829px_size = cv::Size{image_1829px.cols, image_1829px.rows};
 	cv::Size image_3658px_size = cv::Size{image_3658px.cols, image_3658px.rows};
-	
+
+	// configure opencv detector params
+	ocvDetectorParams->adaptiveThreshConstant = 7;
+	ocvDetectorParams->adaptiveThreshWinSizeMin = 7;
+	ocvDetectorParams->adaptiveThreshWinSizeMax = 7;
+
 	for(TestEntry &test : testEntries) {
 		cv::Size imgSize = test.hires ? image_3658px_size: image_1829px_size;
 		fmt::println("Test - Detector: {}, Img: {} x {} Parallel: {}",
