@@ -3,7 +3,7 @@
 #include <chrono>
 #include <cstddef>
 #include <iostream>
-#include <opencv2/aruco/dictionary.hpp>
+#include <opencv2/core.hpp>
 #include <opencv2/core/mat.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/core/utility.hpp>
@@ -61,9 +61,8 @@ static auto aruco_v5_detectFunc = [](const cv::Mat &input) {
 	return aruco_v5_detect(input).first.count();
 };
 
-static const cv::Ptr<cv::aruco::Dictionary> dict =
-		cv::aruco::getPredefinedDictionary(cv::aruco::DICT_APRILTAG_36h11);
-static const auto ocvDetectorParams = cv::aruco::DetectorParameters::create();
+auto dict = cv::makePtr<cv::aruco::Dictionary>(cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250));
+auto ocvDetectorParams = cv::makePtr<cv::aruco::DetectorParameters>();
 
 static auto opencv_aruco_detectFunc = [](const cv::Mat &input) {
 	std::vector<std::vector<cv::Point2f>> markers;
