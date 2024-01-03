@@ -2,3 +2,8 @@
 .vscode/
 build/
 compile_commands.json
+venv/
+*.DS_Store
+dist/
+aruco_module.egg-info/
+.mypy_cache/

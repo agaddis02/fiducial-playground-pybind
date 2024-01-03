@@ -1,3 +1,4 @@
+c++
 in the root directory:
 
 `opencv = 4.8.1`
@@ -10,3 +11,15 @@ in the root directory:
 - `cd app/`
 - move the images from the root directory to `build/app` then run `./fiducial_tests`
 
+
+python
+
+change to the python-aruco-binding directory:
+
+you still need the 2 libraries for c++ above
+
+- `python3 -m venv venv`
+- `source venv/bin/activate`
+- `pip install -r requirements.txt`
+- `python setup.py install`
+- `python test.py`
