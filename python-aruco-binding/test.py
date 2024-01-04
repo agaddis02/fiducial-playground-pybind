@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import time
 from typing import Tuple, Callable, List, Dict, Any
-import aruco_module as aruconano  # Replace with your actual module name
+import aruco_module as aruconano
 
 # Load images
 image_1829px = cv2.imread("image1.jpg")

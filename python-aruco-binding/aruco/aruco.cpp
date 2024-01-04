@@ -51,12 +51,12 @@ PYBIND11_MODULE(aruco_module, m) {
     py::class_<aruconano::Marker>(m, "Marker")
         .def(py::init<>())
         .def_readwrite("id", &aruconano::Marker::id)
-        .def("draw", &aruconano::Marker::draw)
-        .def("estimatePose", &aruconano::Marker::estimatePose);
+        .def("draw", &aruconano::Marker::draw, py::arg("in"), py::arg("color"))
+        .def("estimatePose", &aruconano::Marker::estimatePose, py::arg("cameraMatrix"), py::arg("distCoeffs"), py::arg("markerSize"));
 
     // Binding for the MarkerDetector class
     py::class_<aruconano::MarkerDetector>(m, "MarkerDetector")
-        .def_static("detect", &aruconano::MarkerDetector::detect);
+        .def_static("detect", &aruconano::MarkerDetector::detect, py::arg("img"), py::arg("maxAttemptsPerCandidate") = 10, py::arg("dictionary") = aruconano::TagDicts::ARUCO_MIP_36h12);
         // .def_static("internal_detect", &aruconano::MarkerDetector::internalDetect)
         // .def_static("looksLikeProcessMarker", &aruconano::MarkerDetector::looksLikeProcessMarker)
         // .def_static("linearSampleImage", &aruconano::MarkerDetector::linearSampleImage)

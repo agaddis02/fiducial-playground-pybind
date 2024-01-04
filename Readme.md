@@ -21,5 +21,5 @@ you still need the 2 libraries for c++ above
 - `python3 -m venv venv`
 - `source venv/bin/activate`
 - `pip install -r requirements.txt`
-- `python setup.py install`
+- `python setup.py build_ext --inplace` && `pip install .`
 - `python test.py`
